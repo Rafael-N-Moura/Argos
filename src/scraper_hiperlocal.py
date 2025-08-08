@@ -104,6 +104,17 @@ class ScraperHiperlocal:
         nome = fonte_config['nome']
         url = fonte_config['url']
         regiao = fonte_config['regiao']
+        
+        # Pula fontes que precisam de JavaScript
+        if fonte_config.get('javascript_required', False):
+            print(f"Pulando {nome} ({regiao}) - Precisa de JavaScript")
+            return []
+        
+        # Verifica se tem seletores
+        if 'selectors' not in fonte_config:
+            print(f"Pulando {nome} ({regiao}) - Sem seletores definidos")
+            return []
+            
         selectors = fonte_config['selectors']
         
         print(f"Coletando de {nome} ({regiao})...")

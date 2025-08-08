@@ -2,19 +2,11 @@
   "fontes_hiperlocais": {
     "Pernambuco": [
       {
-        "nome": "Diario de Pernambuco",
-        "url": "https://www.diariodepernambuco.com.br/",
-        "regiao": "Regiao Metropolitana do Recife",
-        "selectors": {
-          "manchetes": "h2.titulo a, h1.titulo a, .noticia-titulo a",
-          "links": "h2.titulo a, h1.titulo a, .noticia-titulo a",
-          "datas": ".data, .timestamp, time"
-        }
-      },
-      {
         "nome": "G1 Pernambuco",
         "url": "https://g1.globo.com/pe/pernambuco/",
         "regiao": "Pernambuco",
+        "tipo_coleta": "html",
+        "javascript_required": false,
         "selectors": {
           "manchetes": ".feed-post-link, .feed-post-body-title a",
           "links": ".feed-post-link, .feed-post-body-title a", 
@@ -22,13 +14,137 @@
         }
       },
       {
-        "nome": "JC Online",
-        "url": "https://jc.ne10.uol.com.br/",
-        "regiao": "Pernambuco", 
+        "nome": "Diário de Pernambuco - Últimas Notícias",
+        "url": "https://www.diariodepernambuco.com.br/ultimas-noticias",
+        "regiao": "Pernambuco",
+        "tipo_coleta": "html",
+        "javascript_required": false,
         "selectors": {
-          "manchetes": ".manchete a, .titulo-noticia a, h2 a",
-          "links": ".manchete a, .titulo-noticia a, h2 a",
-          "datas": ".data-publicacao, .timestamp"
+          "manchetes": "a[href*='/2025/'], a[href*='/2024/']",
+          "links": "a[href*='/2025/'], a[href*='/2024/']",
+          "datas": "text"
+        }
+      },
+      {
+        "nome": "Folha PE - Política",
+        "url": "https://www.folhape.com.br/politica/",
+        "regiao": "Pernambuco",
+        "tipo_coleta": "html",
+        "javascript_required": false,
+        "selectors": {
+          "manchetes": "a[href*='/politica/']",
+          "links": "a[href*='/politica/']",
+          "datas": "text"
+        }
+      },
+      {
+        "nome": "Folha PE - Pernambuco",
+        "url": "https://www.folhape.com.br/noticias/pernambuco/",
+        "regiao": "Pernambuco",
+        "tipo_coleta": "html",
+        "javascript_required": false,
+        "selectors": {
+          "manchetes": "a[href*='/noticias/pernambuco/']",
+          "links": "a[href*='/noticias/pernambuco/']",
+          "datas": "text"
+        }
+      },
+      {
+        "nome": "JC Online - Pernambuco",
+        "url": "https://jc.uol.com.br/pernambuco",
+        "regiao": "Pernambuco",
+        "tipo_coleta": "html",
+        "javascript_required": false,
+        "selectors": {
+          "manchetes": "a[href*='/pernambuco/']",
+          "links": "a[href*='/pernambuco/']",
+          "datas": "text"
+        }
+      },
+      {
+        "nome": "JC Online - Política",
+        "url": "https://jc.uol.com.br/politica",
+        "regiao": "Pernambuco",
+        "tipo_coleta": "html",
+        "javascript_required": false,
+        "selectors": {
+          "manchetes": "a[href*='/politica/']",
+          "links": "a[href*='/politica/']",
+          "datas": "text"
+        }
+      },
+      {
+        "nome": "CBN Recife - Pernambuco",
+        "url": "https://www.cbnrecife.com/categoria/pernambuco",
+        "regiao": "Pernambuco",
+        "tipo_coleta": "selenium",
+        "javascript_required": true,
+        "observacao": "Site SPA - carrega conteúdo via JavaScript"
+      },
+      {
+        "nome": "CBN Recife - Política",
+        "url": "https://www.cbnrecife.com/categoria/politica",
+        "regiao": "Pernambuco",
+        "tipo_coleta": "selenium",
+        "javascript_required": true,
+        "observacao": "Site SPA - carrega conteúdo via JavaScript"
+      },
+      {
+        "nome": "Portal Recife News - Política",
+        "url": "https://portalrecifenews.com/informacoes/politica/",
+        "regiao": "Pernambuco",
+        "tipo_coleta": "selenium",
+        "javascript_required": true,
+        "observacao": "WordPress com lazy loading"
+      }
+    ],
+    "Governo": [
+      {
+        "nome": "SDS Pernambuco",
+        "url": "https://www.sds.pe.gov.br/noticias",
+        "regiao": "Pernambuco",
+        "tipo_coleta": "html",
+        "javascript_required": false,
+        "selectors": {
+          "manchetes": "a[href*='noticia'], .noticia-titulo a, h2 a, h3 a",
+          "links": "a[href*='noticia'], .noticia-titulo a, h2 a, h3 a",
+          "datas": "time, .data, .data-publicacao"
+        }
+      },
+      {
+        "nome": "Secretaria de Educação PE",
+        "url": "https://portal.educacao.pe.gov.br/noticias/",
+        "regiao": "Pernambuco",
+        "tipo_coleta": "html",
+        "javascript_required": false,
+        "selectors": {
+          "manchetes": "a[href*='noticia'], .post-title a, h2 a, h3 a",
+          "links": "a[href*='noticia'], .post-title a, h2 a, h3 a",
+          "datas": "time, .post-date, .data-publicacao"
+        }
+      },
+      {
+        "nome": "TRE Pernambuco",
+        "url": "https://www.tre-pe.jus.br/comunicacao/noticias",
+        "regiao": "Pernambuco",
+        "tipo_coleta": "html",
+        "javascript_required": false,
+        "selectors": {
+          "manchetes": "a[href*='noticia'], .noticia-titulo a, h2 a, h3 a",
+          "links": "a[href*='noticia'], .noticia-titulo a, h2 a, h3 a",
+          "datas": "time, .data-publicacao, .data"
+        }
+      },
+      {
+        "nome": "Prefeitura de Garanhuns",
+        "url": "https://garanhuns.pe.gov.br/noticias/",
+        "regiao": "Agreste",
+        "tipo_coleta": "html",
+        "javascript_required": false,
+        "selectors": {
+          "manchetes": "a[href*='noticia'], .noticia-titulo a, h2 a, h3 a",
+          "links": "a[href*='noticia'], .noticia-titulo a, h2 a, h3 a",
+          "datas": "time, .data-noticia, .data"
         }
       }
     ],
@@ -37,6 +153,8 @@
         "nome": "G1 Caruaru",
         "url": "https://g1.globo.com/pe/caruaru-regiao/",
         "regiao": "Agreste",
+        "tipo_coleta": "html",
+        "javascript_required": false,
         "selectors": {
           "manchetes": ".feed-post-link, .feed-post-body-title a",
           "links": ".feed-post-link, .feed-post-body-title a",
@@ -44,25 +162,33 @@
         }
       },
       {
-        "nome": "Portal Vanguarda",
-        "url": "https://portalvanguarda.com.br/",
+        "nome": "Folha de Caruaru - Política",
+        "url": "https://folhadecaruaru.com.br/category/noticias/politica/",
         "regiao": "Agreste",
-        "selectors": {
-          "manchetes": ".post-title a, h2 a, .entry-title a",
-          "links": ".post-title a, h2 a, .entry-title a",
-          "datas": ".post-date, .entry-date"
-        }
+        "tipo_coleta": "selenium",
+        "javascript_required": true,
+        "observacao": "WordPress com lazy loading"
+      },
+      {
+        "nome": "Folha de Caruaru - Caruaru",
+        "url": "https://folhadecaruaru.com.br/category/noticias/caruaru/",
+        "regiao": "Agreste",
+        "tipo_coleta": "selenium",
+        "javascript_required": true,
+        "observacao": "WordPress com lazy loading"
       }
     ],
     "Interior": [
       {
-        "nome": "Blog do BG",
-        "url": "https://www.blogdobg.com.br/",
-        "regiao": "Sertao",
+        "nome": "Portal do Sertão",
+        "url": "https://www.jornalportaldosertao.com.br/",
+        "regiao": "Sertão",
+        "tipo_coleta": "html",
+        "javascript_required": false,
         "selectors": {
-          "manchetes": ".post-title a, h2 a",
-          "links": ".post-title a, h2 a", 
-          "datas": ".post-meta-date"
+          "manchetes": "a[href*='noticia'], .post-title a, h2 a, h3 a",
+          "links": "a[href*='noticia'], .post-title a, h2 a, h3 a",
+          "datas": "time, .post-date, .data"
         }
       }
     ]
