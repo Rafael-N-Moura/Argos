@@ -1,8 +1,3 @@
-"""
-Scraper Hiperlocal - Atividade 2.1
-Coleta notícias de fontes de mídia hiperlocais de Pernambuco
-Seguindo a metodologia definida no plano técnico
-"""
 
 import requests
 from bs4 import BeautifulSoup
@@ -16,7 +11,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 class ScraperHiperlocal:
-    def __init__(self, config_path="config_fontes_hiperlocalais.json"):
+    def __init__(self, config_path="../config/config_fontes_hiperlocalais.json"):
         """
         Inicializa o scraper com configurações das fontes hiperlocais
         """
@@ -24,7 +19,6 @@ class ScraperHiperlocal:
         self.fontes = self.carregar_configuracao()
         self.noticias_coletadas = []
         
-        # Headers para simular navegador real
         self.headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
@@ -47,23 +41,22 @@ class ScraperHiperlocal:
 
     def fazer_requisicao(self, url, timeout=10):
         """
-        Faz requisição HTTP com tratamento de erro
+        Faz requisição HTTP 
         """
         try:
             response = requests.get(url, headers=self.headers, timeout=timeout)
             response.raise_for_status()
             return response
         except requests.exceptions.RequestException as e:
-            print(f"❌ Erro ao acessar {url}: {e}")
+            print(f"Erro ao acessar {url}: {e}")
             return None
 
     def extrair_texto_limpo(self, elemento):
         """
-        Extrai texto limpo de um elemento BeautifulSoup
+        Extrai texto limpo de um BeautifulSoup
         """
         if elemento:
             texto = elemento.get_text(strip=True)
-            # Remove quebras de linha e espaços extras
             texto = re.sub(r'\s+', ' ', texto)
             return texto
         return ""
@@ -75,7 +68,6 @@ class ScraperHiperlocal:
         if not data_str:
             return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         
-        # Padrões comuns de data em português
         padroes = [
             r'(\d{1,2})/(\d{1,2})/(\d{4})',  # DD/MM/AAAA
             r'(\d{4})-(\d{1,2})-(\d{1,2})',  # AAAA-MM-DD
@@ -91,7 +83,7 @@ class ScraperHiperlocal:
         for padrao in padroes:
             match = re.search(padrao, data_str)
             if match:
-                if 'de' in padrao:  # Formato brasileiro
+                if 'de' in padrao:  # Por extenso
                     dia, mes_nome, ano = match.groups()
                     mes = meses.get(mes_nome.lower(), '01')
                     return f"{ano}-{mes}-{dia.zfill(2)} 00:00:00"
@@ -116,7 +108,7 @@ class ScraperHiperlocal:
         
         print(f"Coletando de {nome} ({regiao})...")
         
-        # Fazer requisição
+        # Faz requisição
         response = self.fazer_requisicao(url)
         if not response:
             return []
@@ -126,23 +118,19 @@ class ScraperHiperlocal:
         noticias_fonte = []
         
         try:
-            # Buscar elementos de manchetes
             manchetes_elements = []
             for selector in selectors['manchetes'].split(', '):
                 manchetes_elements.extend(soup.select(selector.strip()))
             
-            # Buscar elementos de links
             links_elements = []
             for selector in selectors['links'].split(', '):
                 links_elements.extend(soup.select(selector.strip()))
             
-            # Buscar elementos de datas
             datas_elements = []
             for selector in selectors['datas'].split(', '):
                 datas_elements.extend(soup.select(selector.strip()))
             
-            # Processar cada manchete encontrada
-            for i, manchete_elem in enumerate(manchetes_elements[:10]):  # Limita a 10 por fonte
+            for i, manchete_elem in enumerate(manchetes_elements[:30]):  # Limita a 30 por fonte
                 manchete = self.extrair_texto_limpo(manchete_elem)
                 
                 # Obter link
@@ -187,15 +175,14 @@ class ScraperHiperlocal:
         print("Iniciando coleta hiperlocal...")
         self.noticias_coletadas = []
         
-        # Iterar por todas as regiões e fontes
         for regiao, fontes_regiao in self.fontes.get('fontes_hiperlocais', {}).items():
             print(f"\nColetando região: {regiao}")
             
             for fonte_config in fontes_regiao:
                 noticias_fonte = self.scraping_fonte(fonte_config)
                 self.noticias_coletadas.extend(noticias_fonte)
-                
-                # Pausa respeitosa entre requisições
+
+                # Pausa entre requisições
                 time.sleep(2)
         
         print(f"\nColeta finalizada! Total: {len(self.noticias_coletadas)} notícias")
@@ -228,13 +215,10 @@ class ScraperHiperlocal:
         """
         Método principal que executa todo o processo de coleta
         """
-        print("=" * 50)
-        print("   SCRAPER HIPERLOCAL - ATIVIDADE 2.1")
-        print("=" * 50)
         
         # Verificar configuração
         if not self.fontes:
-            print("Configuração de fontes não encontrada!")
+            print("Configuração de fontes não encontrada")
             return
         
         # Executar coleta
@@ -247,13 +231,9 @@ class ScraperHiperlocal:
 
 
 def main():
-    """
-    Função principal para executar o scraper hiperlocal
-    """
     scraper = ScraperHiperlocal()
     noticias = scraper.executar_coleta_completa()
     
-    # Mostrar amostra dos resultados
     if noticias:
         print("\nAmostra das notícias coletadas:")
         df = pd.DataFrame(noticias)
